@@ -1,53 +1,70 @@
 package dsa.arraysandstrings;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class IsUniqueTest {
+    
+    private void assertAllSolutions(boolean expected, String input) {
+        assertEquals(
+            expected, 
+            IsUnique.isUniqueBruteForce(input),
+            "brute force solution failed"
+        );
+        assertEquals(
+            expected, 
+            IsUnique.isUniqueHashMap(input),
+            "hashmap solution failed"
+        );        
+        assertEquals(
+            expected, 
+            IsUnique.isUniqueBitVector(input),
+            "bit vector solution failed"
+        ); 
+        assertEquals(
+            expected, 
+            IsUnique.isUniqueSort(input),
+            "sorting solution failed"
+        );
+        assertEquals(
+            expected, 
+            IsUnique.isUniqueChars(input),
+            "boolean array solution failed"
+        );       
+    }
 
     @Test 
     void returnsTrueWhenAllCharactersUnique() {
         String allUnique = "abcdefgh";
 
-        boolean unique = IsUnique.isUniqueBruteForce(allUnique);
-
-        assertTrue(unique);
+        assertAllSolutions(true, allUnique);
     }
 
     @Test 
-    void returnsFalseWhenAllCharactersNotUnique() {
+    void returnsFalseWhenAllCharactersAreNotUnique() {
         String duplicates = "aabbccdd";
 
-        boolean unique = IsUnique.isUniqueBruteForce(duplicates);
-
-        assertFalse(unique);
+        assertAllSolutions(false, duplicates);
     }
 
     @Test 
     void returnsTrueForEmptyString() {
         String empty = "";
 
-        boolean unique = IsUnique.isUniqueBruteForce(empty);
-
-        assertTrue(unique);
+        assertAllSolutions(true, empty);
     }
 
     @Test 
     void returnsTrueForOneCharacter() {
         String single = "a";
 
-        boolean unique = IsUnique.isUniqueBruteForce(single);
-
-        assertTrue(unique);
+        assertAllSolutions(true, single);
     }
 
     @Test 
-    void returnsFalseDuplicatesFarApart() {
+    void returnsFalseDuplicatesAreFarApart() {
         String farApart = "abcdefghijklmnopqrstuvwxyza";
 
-        boolean unique = IsUnique.isUniqueBruteForce(farApart);
-
-        assertFalse(unique);
+        assertAllSolutions(false, farApart);
     }
 }
