@@ -19,6 +19,12 @@ public class MyStringBuilder {
         }
     }
 
+    public void append(char character) {
+        ensureCapacity(size + 1);
+        characters[size] = character;
+        size++;
+    }
+
     @SuppressWarnings("ManualArrayToCollectionCopy")
     private void ensureCapacity(int requiredCapacity) {
         if (requiredCapacity <= characters.length) {
