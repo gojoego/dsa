@@ -77,4 +77,52 @@ class PalindromePermutation {
         }
         return table;
     }
+
+    // time O(n), space O(1)
+    public static boolean palindromePermutationOpt(String phrase) {
+        int countOdd = 0;
+        int[] table = new int[Character.getNumericValue('z') - Character.getNumericValue('a') + 1];
+        for (char c: phrase.toCharArray()) {
+            int x = getCharNumber(c);
+            if (x != -1) {
+                table[x]++;
+                if (table[x] % 2 == 1) {
+                    countOdd++;
+                } else {
+                    countOdd--;
+                }
+            } 
+        }    
+        return countOdd <= 1;
+    }
+    
+    // toggle ith bit in int
+    public static int toggle(int bitVector, int index) {
+        if (index < 0) return bitVector;
+
+        int mask = 1 << index;
+        bitVector ^= mask;
+        return bitVector;
+    }
+
+    // create bit vector for string - for each letter value i, toggle ith bit 
+    public static int createBitVector(String phrase) {
+        int bitVector = 0;
+        for (char c : phrase.toCharArray()) {
+            int x = getCharNumber(c);
+            bitVector = toggle(bitVector, x);
+        }
+        return bitVector;
+    }
+
+    // check that 1 bit at most set by subtracting 1 from int ANDing w original integer 
+    public static boolean checkAtMostOneBitSet(int bitVector) {
+        return (bitVector & (bitVector - 1)) == 0;
+    }
+
+    // time O(n), space O(1)
+    public static boolean palindromePermutationBitVector(String phrase) {
+        int bitVector = createBitVector(phrase);
+        return checkAtMostOneBitSet(bitVector);
+    }
 }
